@@ -1,0 +1,48 @@
+<?php
+require_once('app/models/pelisModel.php');
+require_once('app/models/generosModel.php');
+
+class GeneroController
+{
+    private $generosModel;
+    public function __construct()
+    {
+        $this->peliculasController = new PelisController();
+        $this->peliculasView = new PelisView();
+        $this->generosModel = new GeneroModel();
+    }
+
+    //borrar el genero pero primero lo controla si se puede borrar
+    public function eliminarGenero()
+    {
+        $id = $_POST['id'];
+        /*la funcion controlarGenero indica si un genero tiene alguna
+         pelicula asociada para ver si se puede borrar*/
+        $borrar = $this->generosModel->controlarGenero($id);
+        if ($borrar) {
+            //borrar este genero
+            $this->generosModel->borrarGenero($id);
+            $this->peliculasController->showHome();
+        } else {
+            //informar que no se puede borrar 
+            $this->peliculasController->showHome("no se puede borrar la categoria primero elimine todas las peliculas con esa categoria");
+        }
+    }
+
+    //funcion para modificar un genero
+    public function modificarGenero()
+    {
+        $id = $_POST['id'];
+        $nuevoNombre = $_POST['nuevo'];
+        $this->generosModel->editarGenero($id, $nuevoNombre);
+        $this->peliculasController->showHome();
+    }
+
+    //funcion para agregar un genero
+    public function agregarGenero()
+    {
+        $nombre = $_POST['nombre'];
+        $this->generosModel->crearGenero($nombre);
+        $this->peliculasController->showHome();
+    }
+}

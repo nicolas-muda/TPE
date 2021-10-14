@@ -1,0 +1,55 @@
+.ocultar {
+    display: none;
+}
+
+h1 {
+    text-decoration: underline;
+}
+
+.botonera {
+    display: flex;
+    justify-content: center;
+}
+
+.boton {
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+body {
+    background-color: rgb(42, 56, 56);
+    color: rgb(97, 197, 201);
+}
+
+div.lanzamientos {
+    padding-bottom: 1%;
+    text-align: center;
+}
+
+div.fotos {
+    display: flex;
+    justify-content: center;
+}
+
+div.foto {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 30px;
+    margin-right: 30px;
+    box-shadow: 10px 5px 5px black;
+}
+
+footer div.derechos {
+    text-align: justify;
+}
+
+div.error {
+    display: flex;
+    justify-content: center;
+}
+
+footer div.d {
+    text-align: center;
+    background-color: rgb(33, 37, 41);
+    padding-bottom: 0.1%;
+}
