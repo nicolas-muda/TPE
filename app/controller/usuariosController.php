@@ -34,7 +34,7 @@ class UsuariosController
             $this->showLogin('error de usuario o contraseña');
         }
     }
-
+    
     public function desconectar()
     {
         $this->helper->logout();

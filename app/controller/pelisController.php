@@ -91,4 +91,10 @@ class PelisController
             return true;
         }
     }
+
+    public function mostrarDetalles($id){
+        $pelicula= $this->peliculasModel->obtenerPelicula($id);
+        $this->peliculasView->mostrarDetalles($pelicula);
+    }
+
 }

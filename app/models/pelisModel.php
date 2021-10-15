@@ -36,10 +36,19 @@ class PelisModel
     //trae todas las peliculas
     public function getPeliculas()
     {
-        $sql = "SELECT p.`nombre_pelicula`, p.`puntuación`, p.`duración`,p.`descripcion`,g.`genero` FROM `peliculas`p INNER JOIN `generos`g ON p.id_genero_fk = g.id_generos ORDER by id_película";
+        $sql = "SELECT p.*,g.`genero` FROM `peliculas`p INNER JOIN `generos`g ON p.id_genero_fk = g.id_generos ORDER by id_pelicula";
         $stm = $this->PDO->prepare($sql);
         $stm->execute();
         $pelicula = $stm->fetchAll(PDO::FETCH_OBJ);
+        return $pelicula;
+    }
+
+    public function obtenerPelicula($id)
+    {
+        $sql = "SELECT p.* , g.`genero` FROM `peliculas`p INNER JOIN `generos`g ON p.id_genero_fk = g.id_generos WHERE p.id_pelicula = ? ";
+        $stm = $this->PDO->prepare($sql);
+        $stm->execute([$id]);
+        $pelicula = $stm->fetch(PDO::FETCH_OBJ);
         return $pelicula;
     }
 

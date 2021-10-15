@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-10-2021 a las 20:50:53
+-- Tiempo de generación: 15-10-2021 a las 03:09:21
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.6
 
@@ -51,19 +51,19 @@ INSERT INTO `generos` (`id_generos`, `genero`) VALUES
 --
 
 CREATE TABLE `peliculas` (
-  `id_película` int(200) NOT NULL,
-  `duración` varchar(15) NOT NULL,
+  `id_pelicula` int(200) NOT NULL,
+  `duracion` varchar(15) NOT NULL,
   `descripcion` varchar(500) NOT NULL,
   `id_genero_fk` int(11) NOT NULL,
   `nombre_pelicula` varchar(100) NOT NULL,
-  `puntuación` int(10) NOT NULL
+  `puntuacion` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `peliculas`
 --
 
-INSERT INTO `peliculas` (`id_película`, `duración`, `descripcion`, `id_genero_fk`, `nombre_pelicula`, `puntuación`) VALUES
+INSERT INTO `peliculas` (`id_pelicula`, `duracion`, `descripcion`, `id_genero_fk`, `nombre_pelicula`, `puntuacion`) VALUES
 (1, '1h 52m', 'Los investigadores de fenómenos paranormales Ed y Lorraine Warren se enfrentan a un nuevo caso: el de un hombre acusado de un terrible asesinato, que asegura haber sido poseído por un demonio.', 1, 'el conjuro 3', 9),
 (2, '1h 30m', 'En un mundo invadido y arrasado por unos letales extraterrestres que se guían por el sonido, Evelyn y Lee Abbott sobreviven con sus hijos en una granja aislada en el bosque, sumidos en el más profundo silencio. Mientras no hagan ruido, estarán a salvo.', 1, 'Un lugar en silencio', 5),
 (3, '2h 31m', 'Una peligrosa conspiración, relacionada con su pasado, persigue a Natasha Romanoff, también conocida como Viuda Negra. La agente tendrá que lidiar con las consecuencias de haber sido espía, así como con las relaciones rotas, para sobrevivir.', 3, 'black widow', 4),
@@ -109,7 +109,7 @@ ALTER TABLE `generos`
 -- Indices de la tabla `peliculas`
 --
 ALTER TABLE `peliculas`
-  ADD PRIMARY KEY (`id_película`),
+  ADD PRIMARY KEY (`id_pelicula`),
   ADD KEY `id genero` (`id_genero_fk`);
 
 --
@@ -126,13 +126,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `generos`
 --
 ALTER TABLE `generos`
-  MODIFY `id_generos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_generos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `peliculas`
 --
 ALTER TABLE `peliculas`
-  MODIFY `id_película` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_pelicula` int(200) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -148,7 +148,7 @@ ALTER TABLE `usuarios`
 -- Filtros para la tabla `peliculas`
 --
 ALTER TABLE `peliculas`
-  ADD CONSTRAINT `peliculas_ibfk_1` FOREIGN KEY (`id_genero_FK`) REFERENCES `generos` (`id_generos`),
+  ADD CONSTRAINT `peliculas_ibfk_1` FOREIGN KEY (`id_genero_fk`) REFERENCES `generos` (`id_generos`),
   ADD CONSTRAINT `peliculas_ibfk_2` FOREIGN KEY (`id_genero_fk`) REFERENCES `generos` (`id_generos`);
 COMMIT;
 

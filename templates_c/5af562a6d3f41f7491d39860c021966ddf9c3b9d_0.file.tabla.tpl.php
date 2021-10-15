@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.39, created on 2021-10-14 20:37:34
+/* Smarty version 3.1.39, created on 2021-10-15 02:57:16
   from 'C:\xampp\htdocs\practicos\ultra_pelis\template\tabla.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.39',
-  'unifunc' => 'content_616878ee64d2b7_73565462',
+  'unifunc' => 'content_6168d1ec102e63_68729215',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '5af562a6d3f41f7491d39860c021966ddf9c3b9d' => 
     array (
       0 => 'C:\\xampp\\htdocs\\practicos\\ultra_pelis\\template\\tabla.tpl',
-      1 => 1634235891,
+      1 => 1634259433,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_616878ee64d2b7_73565462 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6168d1ec102e63_68729215 (Smarty_Internal_Template $_smarty_tpl) {
 ?><div class="container">
     <h3>lista de peliculas</h3>
     <table class="table table-dark table-striped">
@@ -30,6 +30,7 @@ function content_616878ee64d2b7_73565462 (Smarty_Internal_Template $_smarty_tpl)
             <th>Duracion</th>
             <th>Descripcion</th>
             <th>genero</th>
+            <th>detalles</th>
         </tr>
         <?php
 $_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['peliculas']->value, 'pelicula');
@@ -52,6 +53,8 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);
 $_prefixVariable1 = ob_get_clean();
 echo $_prefixVariable1;?>
 
+                <td><a href="mostrardetalles/<?php echo $_smarty_tpl->tpl_vars['pelicula']->value->id_pelicula;?>
+">ver detalles</a></td>
             </tr>
         <?php
 }

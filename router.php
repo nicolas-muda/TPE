@@ -53,6 +53,9 @@ switch ($params[0]) {
     case 'borrarGenero':
         $generosController->eliminarGenero();
         break;
+    case 'mostrardetalles':
+        $pelisController->mostrarDetalles($params[1]);
+        break;
     default:
         $pelisController->showError();
         break;
