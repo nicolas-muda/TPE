@@ -77,4 +77,5 @@ class GeneroModel
             return false;
         }
     }
+    
 }

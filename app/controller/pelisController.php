@@ -2,18 +2,24 @@
 require_once('app/models/pelisModel.php');
 require_once('app/view/pelisView.php');
 require_once('app/models/generosModel.php');
+require_once('helpers/auth.helper.php');
 
 //controlador de ultra pelis
 class PelisController
 {
     private $peliculasModel;
     private $peliculasView;
+    private $generosModel;
+    private $usuariosModel;
+    private $helper;
     //llamo al pelis model, al view y al generos model para obtener sus funciones
     public function __construct()
     {
         $this->peliculasModel = new PelisModel();
         $this->peliculasView = new PelisView();
         $this->generosModel = new GeneroModel();
+        $this->usuariosModel = new usuariosModel();
+        $this->helper = new AuthHelper();
     }
 
     /*muestro el home, primero obtengo todas las peliculas con el getpeliculas y
@@ -25,6 +31,15 @@ class PelisController
         $this->peliculasView->mostrarHome($peliculas, $categorias, $mensaje);
     }
 
+    public function showAdmisnitracion()
+    {
+        $this->helper->controlarAdmin();
+        $usuarios = $this->usuariosModel->getUsuarios();
+        $this->peliculasView->mostrarAdministracion($usuarios);
+    }
+
+
+
     //va al mostrar error cuando hay un problema en la URL
     public function showError()
     {
@@ -34,10 +49,7 @@ class PelisController
     //crea una pelicula pero primero verifica si hay un usuario activo
     public function agregarPelicula()
     {
-        $controlar = $this->controlarSesion();
-        if (!$controlar) {
-            $this->checkearUsuario();
-        }
+        $this->helper->controlarSesion();
         $nombre = $_POST['nombre'];
         $puntuacion = $_POST['puntuacion'];
         $duracion = $_POST['duracion'];
@@ -50,10 +62,7 @@ class PelisController
     //modifico una pelicula
     public function modificarPelicula()
     {
-        $controlar = $this->controlarSesion();
-        if (!$controlar) {
-            $this->checkearUsuario();
-        }
+        $this->helper->controlarSesion();
         $nombre = $_POST['nombre'];
         $puntuacion = $_POST['puntuacion'];
         $duracion = $_POST['duracion'];
@@ -66,35 +75,16 @@ class PelisController
     //elimino una pelicula
     public function eliminarPelicula()
     {
-        $controlar = $this->controlarSesion();
-        if (!$controlar) {
-            $this->checkearUsuario();
-        }
+        $this->helper->controlarSesion();
         $nombre = $_POST['nombre'];
         $this->peliculasModel->borrarPelicula($nombre);
         $this->showHome();
     }
 
-    private function checkearUsuario()
-    {
-        header('location:' . LOGIN);
-        die();
-    }
 
-    private function controlarSesion()
+    public function mostrarDetalles($id)
     {
-        if (session_status() != PHP_SESSION_ACTIVE)
-            session_start();
-        if (empty($_SESSION['id'])) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public function mostrarDetalles($id){
-        $pelicula= $this->peliculasModel->obtenerPelicula($id);
+        $pelicula = $this->peliculasModel->obtenerPelicula($id);
         $this->peliculasView->mostrarDetalles($pelicula);
     }
-
 }

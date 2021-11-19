@@ -75,4 +75,5 @@ class PelisModel
         $stm = $this->PDO->prepare($sql);
         $stm->execute([$duracion, $descripcion, $id_genero, $nombre, $puntuacion]);
     }
+    
 }

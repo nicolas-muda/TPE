@@ -45,4 +45,5 @@ class GeneroController
         $this->generosModel->crearGenero($nombre);
         $this->peliculasController->showHome();
     }
+    
 }

@@ -3,7 +3,8 @@
 define('BASE_URL', '//' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']) . '/');
 define('HOME', '//' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']) . '/home');
 define('LOGIN', '//' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']) . '/login');
-
+define('ADMINISTRACION', '//' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']) . '/administracion');
+define('ROLES',array("usuario","administrador"));
 
 require_once('app/controller/pelisController.php');
 require_once('app/controller/generosController.php');
@@ -22,19 +23,36 @@ if (!empty($_GET['action'])) {
 $params = explode('/', $accion);
 
 switch ($params[0]) {
-
+        //paginas bases por una forma de decirlo
+    case 'home':
+        $pelisController->showHome();
+        break;
     case 'login':
         $usuariosController->showLogin();
         break;
+    case 'administracion':
+        $pelisController->showAdmisnitracion();
+        break;
+    case 'mostrardetalles':
+        $pelisController->mostrarDetalles($params[1]);
+        break;
+        //casos relacionados con usuarios
     case 'verificar':
         $usuariosController->verificar();
+        break;
+    case 'rol':
+        $usuariosController->cambiarRol($params[1], $params[2]);
+        break;
+    case 'crear':
+        $usuariosController->crearUsuario();
+        break;
+    case 'eliminarUsuario':
+        $usuariosController->eliminarUsuario($params[1]);
         break;
     case 'desconectar':
         $usuariosController->desconectar();
         break;
-    case 'home':
-        $pelisController->showHome();
-        break;
+        //casos sobre peliculas    
     case 'crearpelicula':
         $pelisController->agregarPelicula();
         break;
@@ -44,6 +62,7 @@ switch ($params[0]) {
     case 'borrarpelicula':
         $pelisController->eliminarPelicula();
         break;
+        //casos sobre generos 
     case 'crearGenero':
         $generosController->agregarGenero();
         break;
@@ -53,9 +72,7 @@ switch ($params[0]) {
     case 'borrarGenero':
         $generosController->eliminarGenero();
         break;
-    case 'mostrardetalles':
-        $pelisController->mostrarDetalles($params[1]);
-        break;
+        //error URL
     default:
         $pelisController->showError();
         break;

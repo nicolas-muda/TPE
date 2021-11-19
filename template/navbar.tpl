@@ -13,6 +13,11 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="home">Home</a>
                 </li>
+                {if isset($smarty.session.rol) && $smarty.session.rol=="administrador"}
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="administracion">administracion</a>
+                    </li>
+                {/if}
             </ul>
             {if isset($smarty.session.email)}
                 <div class="d-flex">

@@ -26,6 +26,11 @@ div.lanzamientos {
     text-align: center;
 }
 
+div.login {
+    display: flex;
+    justify-content: center;
+}
+
 div.fotos {
     display: flex;
     justify-content: center;

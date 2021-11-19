@@ -1,4 +1,4 @@
-"use stric"
+"use strict"
 //los botones de peliculas
 document.querySelector("#crearPelicula").addEventListener("click", mostrarCrearPelicula);
 document.querySelector("#editarPelicula").addEventListener("click", mostrarEditarPelicula);

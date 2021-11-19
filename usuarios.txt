@@ -5,3 +5,12 @@ contraseña: contraseña
 
 usuario: testeo@gmail.com
 contraseña: 1234
+
+usuario: repelis@live.com
+contraseña: 123
+
+usuario: usuario1@gmail.com
+contraseña: 123
+
+usuario: usuario2@live.com
+contraseña: 123

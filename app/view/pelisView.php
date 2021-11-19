@@ -16,14 +16,21 @@ class PelisView
         $this->smarty->assign('peliculas', $peliculas);
         $this->smarty->assign('categorias', $categorias);
         $this->smarty->assign('mensaje', $mensaje);
-        
         $this->smarty->display('template/menu.tpl');
+    }
+
+    public function mostrarAdministracion($usuarios)
+    {
+        $this->smarty->assign('usuarios', $usuarios);
+        $this->smarty->assign('ROLES', ROLES);
+        $this->smarty->display('template/administracion.tpl');
     }
 
     public function mostrarError()
     {
         $this->smarty->display('template/error404.tpl');
     }
+
     public function mostrarDetalles($pelicula)
     {
         $this->smarty->assign('pelicula', $pelicula);

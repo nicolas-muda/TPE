@@ -152,4 +152,5 @@
         </div>
     </div>
 {/if}
+<script src="js/botonera.js"></script>
 {include file="template/footer.tpl"}
