@@ -1,37 +1,8 @@
 <?php
+require_once('model.php');
 
-//modelo de ultra pelis
-class PelisModel
+class PelisModel extends Model
 {
-
-    private $PDO;
-    public function __construct()
-    {
-        $this->conectar();
-    }
-
-    //conectar crea el pdo
-    private function conectar()
-    {
-        //direccion ip o nombre del servidor(normal:localhost)
-        $host = 'localhost';
-        //direccion del puerto (normal: 3306)
-        $port = 3306;
-        //nombre de la base de datos
-        $db = 'ultra_pelis';
-        // usuario de coneccion(normal: root)
-        $user = 'root';
-        //contraseña del usuario(normal: nada o root)
-        $password = '';
-
-        $dsn = "mysql:host=$host:$port;dbname=$db;charset=UTF8";
-
-        try {
-            $this->PDO = new PDO($dsn, $user, $password);
-        } catch (PDOException $e) {
-            echo $e->getMessage();
-        }
-    }
 
     //trae todas las peliculas
     public function getPeliculas()
@@ -74,5 +45,18 @@ class PelisModel
         $sql = "INSERT INTO `peliculas`(duracion, descripcion, id_genero_fk, nombre_pelicula, puntuacion) VALUES (?,?,?,?,?)";
         $stm = $this->PDO->prepare($sql);
         $stm->execute([$duracion, $descripcion, $id_genero, $nombre, $puntuacion]);
+    }
+
+    public function controlarGenero($id)
+    {
+        $sql = "SELECT * FROM `peliculas` WHERE id_genero_fk=? limit 1";
+        $stm = $this->PDO->prepare($sql);
+        $stm->execute([$id]);
+        $resultado = $stm->fetch(PDO::FETCH_OBJ);
+        if ($resultado == false) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

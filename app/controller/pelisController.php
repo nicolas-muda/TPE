@@ -38,8 +38,6 @@ class PelisController
         $this->peliculasView->mostrarAdministracion($usuarios);
     }
 
-
-
     //va al mostrar error cuando hay un problema en la URL
     public function showError()
     {

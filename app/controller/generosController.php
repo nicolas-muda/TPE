@@ -5,12 +5,14 @@ require_once('app/models/generosModel.php');
 class GeneroController
 {
     private $peliculasController;
+    private $peliculasModel;
     private $generosModel;
     private $helper;
     
     public function __construct()
     {
         $this->peliculasController = new PelisController();
+        $this->peliculasModel = new PelisModel();
         $this->generosModel = new GeneroModel();
         $this->helper = new AuthHelper();
     }
@@ -22,7 +24,7 @@ class GeneroController
         $id = $_POST['id'];
         /*la funcion controlarGenero indica si un genero tiene alguna
          pelicula asociada para ver si se puede borrar*/
-        $borrar = $this->generosModel->controlarGenero($id);
+        $borrar = $this->peliculasModel->controlarGenero($id);
         if ($borrar) {
             //borrar este genero
             $this->generosModel->borrarGenero($id);

@@ -9,7 +9,7 @@
         </div>
     </div>
 {/if}
-{if isset($smarty.session.id)}
+{if  $smarty.session.rol == "administrador"}
     {*formulario de peliculas*}
     <div>
         <div class="botonera">

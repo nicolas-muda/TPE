@@ -7,6 +7,9 @@ let app = new Vue({
     methods: {
         borrar: function (id) {
             borrarComentario(id);
+        },
+        ordenar: function (criterio, orden) {
+            ordenamiento(criterio, orden)
         }
     }
 });
@@ -28,6 +31,20 @@ async function getComentarios() {
     }
 }
 
+async function ordenamiento(criterio, orden) {
+    var urlEntera = window.location.href;
+    var idPelicula = urlEntera.substring(urlEntera.lastIndexOf('/') + 1);
+    const url = "api/comentario/" + idPelicula + "/" + criterio + "/" + orden;
+    try {
+        let res = await fetch(url);
+        let comentarios = await res.json();
+        app.comentarios = comentarios;
+
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 async function getComentariosPuntuacion(e) {
     e.preventDefault();
     let puntuacion = document.querySelector("#puntuacion").value;
@@ -39,7 +56,7 @@ async function getComentariosPuntuacion(e) {
         let res = await fetch(url);
         let comentarios = await res.json();
         app.comentarios = comentarios;
-        
+
     } catch (error) {
         console.log(error);
     }
@@ -91,7 +108,7 @@ async function borrarComentario(id) {
         console.log(error);
     }
 }
-
+document.querySelector("#todo").addEventListener("click", () => getComentarios());
 document.querySelector("#filtrado").addEventListener("click", (e) => getComentariosPuntuacion(e));
 document.querySelector("#formulario-comentario").addEventListener("submit", (e) => agregarComentario(e));
 document.querySelector("#todo").addEventListener("click", () => getComentarios());
