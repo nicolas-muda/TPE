@@ -34,18 +34,27 @@ class comentariosModel
     //trae todos los comentarios de una pelicula especifica
     public function comentariosPelicula($idPelicula)
     {
-        $sql = "SELECT * FROM `comentarios` WHERE id_pelicula=?";
+        $sql = "SELECT c.id,c.comentario,c.puntuacion,c.fecha_comentario , u.`email` FROM `comentarios`c INNER JOIN `usuarios`u ON c.id_usuario = u.id WHERE c.id_pelicula = ?";
         $stm = $this->PDO->prepare($sql);
         $stm->execute([$idPelicula]);
         $comentarios = $stm->fetchAll(PDO::FETCH_OBJ);
         return $comentarios;
     }
 
-    public function crearComentario($id, $comentario, $idUsuario, $fecha, $idPelicula)
+    public function comentariosPeliculaXPuntuacion($idPelicula,$puntuacion)
     {
-        $sql = "INSERT INTO `comentarios`(id, comentario, id_usuario, fecha_comentario, id_pelicula) VALUES (?,?,?,?,?)";
+        $sql = "SELECT c.id,c.comentario,c.puntuacion,c.fecha_comentario , u.`email` FROM `comentarios`c INNER JOIN `usuarios`u ON c.id_usuario = u.id WHERE c.id_pelicula = ? && c.puntuacion=?";
         $stm = $this->PDO->prepare($sql);
-        $stm->execute([$id, $comentario, $idUsuario, $fecha, $idPelicula]);
+        $stm->execute([$idPelicula,$puntuacion]);
+        $comentarios = $stm->fetchAll(PDO::FETCH_OBJ);
+        return $comentarios;
+    }
+
+    public function crearComentario($idPelicula, $comentario, $puntuacion, $idUsuario, $fecha)
+    {
+        $sql = "INSERT INTO `comentarios`(id_pelicula, comentario, puntuacion, id_usuario, fecha_comentario) VALUES (?,?,?,?,?)";
+        $stm = $this->PDO->prepare($sql);
+        $stm->execute([$idPelicula, $comentario, $puntuacion, $idUsuario, $fecha]);
     }
 
     public function borrarComentario($idComentario)

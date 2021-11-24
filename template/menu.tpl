@@ -27,7 +27,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">ingrese la puntuacion</label>
-                    <input type="number" class="form-control" name="puntuacion" placeholder="de 1 a 10" required>
+                    <input type="number" class="form-control" name="puntuacion" placeholder="de 1 a 10" max="10" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">ingrese la duracion</label>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">ingrese la puntuacion</label>
-                    <input type="number" class="form-control" name="puntuacion" placeholder="de 1 a 10" required>
+                    <input type="number" class="form-control" name="puntuacion" placeholder="de 1 a 10" max="10" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">ingrese la duracion</label>

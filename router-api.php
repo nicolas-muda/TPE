@@ -8,6 +8,8 @@ $router = new Router();
 
 // traigo todos los comentarios de la pelicula
 $router->addRoute('comentario/:idpelicula', 'GET', 'comentariosApiController', 'obtenerComentarios');
+// traigo todos los comentarios de la pelicula que tengan x puntuacion
+$router->addRoute('comentario/:idpelicula/:puntuacion', 'GET', 'comentariosApiController', 'obtenerComentariosPuntuacion');
 //agrego comentario en la pelicula
 $router->addRoute('comentario/:idpelicula', 'POST', 'comentariosApiController', 'agregarComentario');
 //borro comentario de la pelicula

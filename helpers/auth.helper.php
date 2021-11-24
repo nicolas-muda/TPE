@@ -14,6 +14,7 @@ class AuthHelper
             session_start();
     }
 
+
     public function logear($usuario)
     {
         $this->startSession();

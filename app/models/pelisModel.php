@@ -63,7 +63,7 @@ class PelisModel
     //edita una pelicula segun el nombre seleccionado
     public function editarPelicula($nombre, $puntuacion, $duracion, $descripcion, $id_genero)
     {
-        $sql = "UPDATE `peliculas` SET `puntuación`=?,`duración`=?,`descripcion`=?,`id_genero_fk`=? WHERE `nombre_pelicula`=?";
+        $sql = "UPDATE `peliculas` SET `puntuacion`=?,`duracion`=?,`descripcion`=?,`id_genero_fk`=? WHERE `nombre_pelicula`=?";
         $stm = $this->PDO->prepare($sql);
         $stm->execute([$puntuacion, $duracion, $descripcion, $id_genero, $nombre]);
     }
@@ -71,9 +71,8 @@ class PelisModel
     //crea una pelicula 
     public function crearPelicula($nombre, $puntuacion, $duracion, $descripcion, $id_genero)
     {
-        $sql = "INSERT INTO `peliculas`(duración, descripcion, id_genero_fk, nombre_pelicula, puntuación) VALUES (?,?,?,?,?)";
+        $sql = "INSERT INTO `peliculas`(duracion, descripcion, id_genero_fk, nombre_pelicula, puntuacion) VALUES (?,?,?,?,?)";
         $stm = $this->PDO->prepare($sql);
         $stm->execute([$duracion, $descripcion, $id_genero, $nombre, $puntuacion]);
     }
-    
 }
