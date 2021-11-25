@@ -9,7 +9,7 @@
         </div>
     </div>
 {/if}
-{if  $smarty.session.rol == "administrador"}
+{if isset($smarty.session.rol) && $smarty.session.rol == "administrador"}
     {*formulario de peliculas*}
     <div>
         <div class="botonera">
@@ -152,5 +152,6 @@
         </div>
     </div>
 {/if}
+
 <script src="js/botonera.js"></script>
 {include file="template/footer.tpl"}

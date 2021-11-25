@@ -23,30 +23,39 @@ class comentariosApiController
             $idPelicula = $params[':idpelicula'];
             $comentarios = $this->ComentariosModel->comentariosPelicula($idPelicula);
             $this->view->response($comentarios, 200);
-        }
-        else{
-            $this->view->response("error hubo un problema con los parametros", 404);
+        } else {
+            $this->view->response("error hubo un problema con los parametros", 500);
         }
     }
     public function comentariosOrdenados($params)
     {
+        if(isset($params[':orden']) && isset($params[':criterio']) && isset($params[':idpelicula'])){
+            $consulta = "";
             $orden = $params[':orden'];
             $criterio = $params[':criterio'];
             $idPelicula = $params[':idpelicula'];
-            if ($criterio == "fecha") {
+            if ($criterio == "fecha" && ($orden == "ASC" || $orden == "DESC")) {
                 $consulta = "ORDER BY fecha_comentario " . $orden;
-            } elseif($criterio == "puntuacion") {
+            } elseif ($criterio == "puntuacion" && ($orden == "ASC" || $orden == "DESC")) {
                 $consulta = "ORDER BY puntuacion " . $orden;
             }
             $comentarios = $this->ComentariosModel->comentariosPeliculaOrdenados($idPelicula, $consulta);
             $this->view->response($comentarios, 200);
+        }
+        else{
+            $this->view->response("error con los parametros", 500);
+        }
     }
     public function obtenerComentariosPuntuacion($params)
     {
-        $idPelicula = $params[':idpelicula'];
-        $puntuacion = $params[':puntuacion'];
-        $comentarios = $this->ComentariosModel->comentariosPeliculaXPuntuacion($idPelicula, $puntuacion);
-        $this->view->response($comentarios, 200);
+        if (isset($params[':idpelicula']) && isset($params[':puntuacion'])) {
+            $idPelicula = $params[':idpelicula'];
+            $puntuacion = $params[':puntuacion'];
+            $comentarios = $this->ComentariosModel->comentariosPeliculaXPuntuacion($idPelicula, $puntuacion);
+            $this->view->response($comentarios, 200);
+        } else {
+            $this->view->response("error con los parametros", 500);
+        }
     }
     public function agregarComentario($params)
     {
@@ -78,11 +87,10 @@ class comentariosApiController
             $idComentario = $params[':idcomentario'];
             $comentarioBorrar = $this->ComentariosModel->controlarComentario($idComentario);
             if ($comentarioBorrar) {
-                if($_SESSION['rol']=="administrador"){
+                if (isset($_SESSION['rol']) && $_SESSION['rol'] == "administrador") {
                     $this->ComentariosModel->borrarComentario($idComentario);
                     $this->view->response("se elimino correctamente", 200);
-                }
-                else{
+                } else {
                     $this->view->response("error no sos administrador", 500);
                 }
             } else {
