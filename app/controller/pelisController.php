@@ -31,6 +31,17 @@ class PelisController
         $this->peliculasView->mostrarHome($peliculas, $categorias, $mensaje);
     }
 
+    //filtro las peliculas
+    public function filtrarPeliculas()
+    {
+        $mensaje = "";
+        $genero = $_POST['genero'];
+        $peliculas = $this->peliculasModel->getPeliculasFiltradas($genero);
+
+        $categorias = $this->generosModel->consultarGeneros();
+        $this->peliculasView->mostrarHome($peliculas, $categorias, $mensaje);
+    }
+
     public function showAdmisnitracion()
     {
         $this->helper->controlarAdmin();
@@ -47,6 +58,7 @@ class PelisController
     //crea una pelicula pero primero verifica si hay un usuario activo
     public function agregarPelicula()
     {
+        $this->helper->controlarAdmin();
         if (isset($_POST['nombre']) && isset($_POST['puntuacion']) && isset($_POST['duracion']) && isset($_POST['descripcion']) && isset($_POST['genero'])) {
             $this->helper->controlarSesion();
             $nombre = $_POST['nombre'];
@@ -62,16 +74,18 @@ class PelisController
     }
 
     //modifico una pelicula
-    public function modificarPelicula()
+    public function modificarPelicula($id)
     {
-        if (isset($_POST['nombre']) && isset($_POST['puntuacion']) && isset($_POST['duracion']) && isset($_POST['descripcion']) && isset($_POST['genero'])) {
+        $this->helper->controlarAdmin();
+        if (isset($id) && isset($_POST['nombre']) && isset($_POST['puntuacion']) && isset($_POST['duracion']) && isset($_POST['descripcion']) && isset($_POST['genero'])) {
             $this->helper->controlarSesion();
+            $idpelicula = $id;
             $nombre = $_POST['nombre'];
             $puntuacion = $_POST['puntuacion'];
             $duracion = $_POST['duracion'];
             $descripcion = $_POST['descripcion'];
             $id_genero = $_POST['genero'];
-            $this->peliculasModel->editarPelicula($nombre, $puntuacion, $duracion, $descripcion, $id_genero);
+            $this->peliculasModel->editarPelicula($idpelicula, $nombre, $puntuacion, $duracion, $descripcion, $id_genero);
             $this->showHome();
         } else {
             $this->showError();
@@ -81,10 +95,11 @@ class PelisController
     //elimino una pelicula
     public function eliminarPelicula()
     {
-        if (isset($_POST['nombre'])) {
+        $this->helper->controlarAdmin();
+        if (isset($_POST['id'])) {
             $this->helper->controlarSesion();
-            $nombre = $_POST['nombre'];
-            $this->peliculasModel->borrarPelicula($nombre);
+            $idPelicula = $_POST['id'];
+            $this->peliculasModel->borrarPelicula($idPelicula);
             $this->showHome();
         } else {
             $this->showError();
@@ -94,6 +109,7 @@ class PelisController
     public function mostrarDetalles($id)
     {
         $pelicula = $this->peliculasModel->obtenerPelicula($id);
-        $this->peliculasView->mostrarDetalles($pelicula);
+        $categorias = $this->generosModel->consultarGeneros();
+        $this->peliculasView->mostrarDetalles($pelicula, $categorias);
     }
 }

@@ -16,7 +16,7 @@ class PelisModel extends Model
 
     public function obtenerPelicula($id)
     {
-        $sql = "SELECT p.* , g.`genero` FROM `peliculas`p INNER JOIN `generos`g ON p.id_genero_fk = g.id_generos WHERE p.id_pelicula = ? ";
+        $sql = "SELECT p.* , g.genero FROM peliculas p INNER JOIN generos g ON p.id_genero_fk = g.id_generos WHERE p.id_pelicula = ? ";
         $stm = $this->PDO->prepare($sql);
         $stm->execute([$id]);
         $pelicula = $stm->fetch(PDO::FETCH_OBJ);
@@ -24,32 +24,32 @@ class PelisModel extends Model
     }
 
     //borra una pelicula por el nombre seleccionado
-    public function borrarPelicula($nombre)
+    public function borrarPelicula($id)
     {
-        $sql = "DELETE FROM peliculas WHERE nombre_pelicula=?";
+        $sql = "DELETE FROM peliculas WHERE id_pelicula=?";
         $stm = $this->PDO->prepare($sql);
-        $stm->execute([$nombre]);
+        $stm->execute([$id]);
     }
 
     //edita una pelicula segun el nombre seleccionado
-    public function editarPelicula($nombre, $puntuacion, $duracion, $descripcion, $id_genero)
+    public function editarPelicula($idpelicula, $nombre, $puntuacion, $duracion, $descripcion, $id_genero)
     {
-        $sql = "UPDATE `peliculas` SET `puntuacion`=?,`duracion`=?,`descripcion`=?,`id_genero_fk`=? WHERE `nombre_pelicula`=?";
+        $sql = "UPDATE peliculas SET nombre_pelicula=?,puntuacion=?,duracion=?,descripcion=?,id_genero_fk=? WHERE id_pelicula=?";
         $stm = $this->PDO->prepare($sql);
-        $stm->execute([$puntuacion, $duracion, $descripcion, $id_genero, $nombre]);
+        $stm->execute([$nombre,$puntuacion, $duracion, $descripcion, $id_genero, $idpelicula]);
     }
 
     //crea una pelicula 
     public function crearPelicula($nombre, $puntuacion, $duracion, $descripcion, $id_genero)
     {
-        $sql = "INSERT INTO `peliculas`(duracion, descripcion, id_genero_fk, nombre_pelicula, puntuacion) VALUES (?,?,?,?,?)";
+        $sql = "INSERT INTO peliculas(duracion, descripcion, id_genero_fk, nombre_pelicula, puntuacion) VALUES (?,?,?,?,?)";
         $stm = $this->PDO->prepare($sql);
         $stm->execute([$duracion, $descripcion, $id_genero, $nombre, $puntuacion]);
     }
 
     public function controlarGenero($id)
     {
-        $sql = "SELECT * FROM `peliculas` WHERE id_genero_fk=? limit 1";
+        $sql = "SELECT * FROM peliculas WHERE id_genero_fk=? limit 1";
         $stm = $this->PDO->prepare($sql);
         $stm->execute([$id]);
         $resultado = $stm->fetch(PDO::FETCH_OBJ);
@@ -58,5 +58,14 @@ class PelisModel extends Model
         } else {
             return false;
         }
+    }
+
+    public function getPeliculasFiltradas($genero)
+    {
+        $sql = "SELECT p.*, g.genero FROM peliculas p INNER JOIN generos g ON p.id_genero_fk = g.id_generos WHERE p.id_genero_fk = ?";
+        $stm = $this->PDO->prepare($sql);
+        $stm->execute([$genero]);
+        $pelicula = $stm->fetchAll(PDO::FETCH_OBJ);
+        return $pelicula;
     }
 }

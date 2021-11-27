@@ -31,9 +31,10 @@ class PelisView
         $this->smarty->display('template/error404.tpl');
     }
 
-    public function mostrarDetalles($pelicula)
+    public function mostrarDetalles($pelicula,$categorias)
     {
         $this->smarty->assign('pelicula', $pelicula);
+        $this->smarty->assign('categorias', $categorias);
         $this->smarty->display('template/detalles.tpl');
     }
 }

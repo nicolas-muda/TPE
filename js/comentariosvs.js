@@ -34,7 +34,8 @@ async function getComentarios() {
 async function ordenamiento(criterio, orden) {
     var urlEntera = window.location.href;
     var idPelicula = urlEntera.substring(urlEntera.lastIndexOf('/') + 1);
-    const url = "api/comentario/" + idPelicula + "/" + criterio + "/" + orden;
+    const url = "api/comentario/" + idPelicula +"?criterio="+criterio+"&orden="+orden;
+    //+ "/" + criterio + "/" + orden;
     try {
         let res = await fetch(url);
         let comentarios = await res.json();
@@ -70,10 +71,11 @@ function agregarComentario(e) {
     const url = "api/comentario/" + idPelicula;
 
     let data = {
-        comentario: document.querySelector("textarea[name=descripcion]").value,
+        comentario: document.querySelector("textarea[name=comentario]").value,
         puntuacion: document.querySelector("select[name=puntuacion]").value,
     }
 
+    
     fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

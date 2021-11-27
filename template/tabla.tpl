@@ -9,6 +9,9 @@
             <th>Puntuacion</th>
             <th>detalles</th>
         </tr>
+        {if $peliculas==null }
+            <td colspan="6">no hay peliculas disponibles de ese genero</td>
+        {/if}
         {foreach from=$peliculas  item=$pelicula}
             <tr>
                 <td>{$pelicula->nombre_pelicula}</td>

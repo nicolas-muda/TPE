@@ -1,7 +1,6 @@
 "use strict"
 //los botones de peliculas
 document.querySelector("#crearPelicula").addEventListener("click", mostrarCrearPelicula);
-document.querySelector("#editarPelicula").addEventListener("click", mostrarEditarPelicula);
 document.querySelector("#borrarPelicula").addEventListener("click", mostrarBorrarPelicula);
 //los botones de genero
 document.querySelector("#crearGenero").addEventListener("click", mostrarCrearGenero);
@@ -10,9 +9,6 @@ document.querySelector("#borrarGenero").addEventListener("click", mostrarBorrarG
 
 function mostrarCrearPelicula() {
     document.getElementById('crearPeli').classList.toggle('ocultar');
-}
-function mostrarEditarPelicula() {
-    document.getElementById('editarPeli').classList.toggle('ocultar');
 }
 function mostrarBorrarPelicula() {
     document.getElementById('borrarPeli').classList.toggle('ocultar');

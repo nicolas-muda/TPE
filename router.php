@@ -58,10 +58,13 @@ switch ($params[0]) {
         $pelisController->agregarPelicula();
         break;
     case 'editarpelicula':
-        $pelisController->modificarPelicula();
+        $pelisController->modificarPelicula($params[1]);
         break;
     case 'borrarpelicula':
         $pelisController->eliminarPelicula();
+        break;
+    case 'peliculasFiltradas':
+        $pelisController->filtrarPeliculas();
         break;
         //casos sobre generos 
     case 'crearGenero':

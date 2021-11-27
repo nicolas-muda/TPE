@@ -72,6 +72,7 @@ class UsuariosController
 
     public function eliminarUsuario($id)
     {
+        $this->helper->controlarAdmin();
         if ($_SESSION['id'] != $id) {
             $this->usuariosModel->eliminarUsuario($id);
         }

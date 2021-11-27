@@ -22,7 +22,7 @@
             {if isset($smarty.session.email)}
                 <div class="d-flex">
                     <p>bienvenido {$smarty.session.email}</p>
-                    <a href="desconectar">desconectar</a>
+                    <a href="desconectar"><input type="button" class="btn btn-info" value="desconectar"></a>
                 </div>
             {else}
                 <div class="d-flex">

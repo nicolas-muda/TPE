@@ -9,13 +9,32 @@
         </div>
     </div>
 {/if}
+{*formulario de filtrado por genero*}
+<div class="container">
+    <form action="peliculasFiltradas" method="post">
+        <div class="mb-3">
+            <label class="form-label">filtrar peliculas por genero:</label>
+            <select name='genero' class="form-select">
+                {foreach from=$categorias item=categoria}
+                    <option value="{$categoria->id_generos}">{$categoria->genero}</option>
+                {/foreach}
+            </select>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-info">filtrar</button>
+            <a href="home">
+                <input type="button" class="btn btn-info" value="mostrar todos">
+            </a>
+        </div>
+    </form>
+</div>
 {if isset($smarty.session.rol) && $smarty.session.rol == "administrador"}
+    <hr>
     {*formulario de peliculas*}
     <div>
         <div class="botonera">
-            <button type="button" id="crearPelicula" class="btn btn-info boton">mostrar crear pelicula</button>
-            <button type="button" id="editarPelicula" class="btn btn-info boton">mostrar editar pelicula</button>
-            <button type="button" id="borrarPelicula" class="btn btn-info boton">mostrar borrar pelicula</button>
+            <button type="button" id="crearPelicula" class="btn btn-info boton">crear pelicula</button>
+            <button type="button" id="borrarPelicula" class="btn btn-info boton">borrar pelicula</button>
         </div>
 
         <div id="crearPeli" class="ocultar">
@@ -49,53 +68,18 @@
             </form>
         </div>
 
-        <div id="editarPeli" class="ocultar">
-            <h1>editar pelicula</h1>
-            <form action="editarpelicula" method="post">
-                <div class="mb-3">
-                    <label class="form-label">seleccione el nombre</label>
-                    <select name='nombre' class="form-select">
-                        {foreach from=$peliculas item=pelicula}
-                            <option value="{$pelicula->nombre_pelicula}">{$pelicula->nombre_pelicula}</option>
-                        {/foreach}
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">ingrese la puntuacion</label>
-                    <input type="number" class="form-control" name="puntuacion" placeholder="de 1 a 10" max="10" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">ingrese la duracion</label>
-                    <input type="text" class="form-control" name="duracion" placeholder="xh xxm" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">ingrese descripcion</label>
-                    <textarea class="form-control" name="descripcion" rows="3" required></textarea>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">seleccione categoria</label>
-                    <select name='genero' class="form-select">
-                        {foreach from=$categorias item=categoria}
-                            <option value="{$categoria->id_generos}">{$categoria->genero}</option>
-                        {/foreach}
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-info">editar</button>
-            </form>
-        </div>
-
         <div id="borrarPeli" class="ocultar">
             <h1>borrar pelicula</h1>
             <form action="borrarpelicula" method="post">
                 <div class="mb-3">
-                    <label class="form-label">seleccione el nombre</label>
-                    <select name='nombre' class="form-select">
+                    <label class="form-label">seleccione la pelicula</label>
+                    <select name='id' class="form-select">
                         {foreach from=$peliculas item=pelicula}
-                            <option value="{$pelicula->nombre_pelicula}">{$pelicula->nombre_pelicula}</option>
+                            <option value="{$pelicula->id_pelicula}">{$pelicula->nombre_pelicula}</option>
                         {/foreach}
                     </select>
                 </div>
-                <button type="submit" class="btn btn-info">borrar</button>
+                <button type="submit" class="btn btn-danger">borrar</button>
             </form>
         </div>
         <hr>
@@ -103,9 +87,9 @@
     {*formulario de generos*}
     <div>
         <div class="botonera">
-            <button type="button" id="crearGenero" class="btn btn-info boton">mostrar crear genero</button>
-            <button type="button" id="editarGenero" class="btn btn-info boton">mostrar editar genero</button>
-            <button type="button" id="borrarGenero" class="btn btn-info boton">mostrar borrar genero</button>
+            <button type="button" id="crearGenero" class="btn btn-info boton">crear genero</button>
+            <button type="button" id="editarGenero" class="btn btn-info boton">editar genero</button>
+            <button type="button" id="borrarGenero" class="btn btn-info boton">borrar genero</button>
         </div>
 
         <div id="formCrearGenero" class="ocultar">
