@@ -63,6 +63,9 @@ switch ($params[0]) {
     case 'borrarpelicula':
         $pelisController->eliminarPelicula();
         break;
+    case 'eliminarPortada':
+        $pelisController->eliminarPortada();
+        break;
     case 'peliculasFiltradas':
         $pelisController->filtrarPeliculas();
         break;

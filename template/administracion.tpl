@@ -21,10 +21,17 @@
                     {/if}
                     <td><a href="eliminarUsuario/{$usuario->id}">eliminar</a></td>
                 {else}
-                    <td colspan="2"><p>no puedes modificarte tu propio rol ni eliminar tu propia cuenta</p></td>
+                    <td colspan="2">
+                        <p>no puedes modificarte tu propio rol ni eliminar tu propia cuenta</p>
+                    </td>
                 {/if}
             </tr>
         {/foreach}
     </table>
+    {if $mensaje}
+        <div class="alert alert-danger" role="alert">
+            {$mensaje}
+        </div>
+    {/if}
 </div>
 {include file="template/footer.tpl"}

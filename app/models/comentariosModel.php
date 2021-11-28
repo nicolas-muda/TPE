@@ -28,7 +28,28 @@ class comentariosModel extends Model
         $comentarios = $stm->fetchAll(PDO::FETCH_OBJ);
         return $comentarios;
     }
-
+    public function controlarComentariosPelicula($id){
+        $sql = "SELECT * FROM `comentarios` WHERE id_pelicula=? limit 1";
+        $stm = $this->PDO->prepare($sql);
+        $stm->execute([$id]);
+        $resultado = $stm->fetch(PDO::FETCH_OBJ);
+        if ($resultado == false) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function controlarComentriosUsuario($id){
+        $sql = "SELECT * FROM `comentarios` WHERE id_usuario=? limit 1";
+        $stm = $this->PDO->prepare($sql);
+        $stm->execute([$id]);
+        $resultado = $stm->fetch(PDO::FETCH_OBJ);
+        if ($resultado == false) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public function crearComentario($idPelicula, $comentario, $puntuacion, $idUsuario, $fecha)
     {
         $sql = "INSERT INTO `comentarios`(id_pelicula, comentario, puntuacion, id_usuario, fecha_comentario) VALUES (?,?,?,?,?)";

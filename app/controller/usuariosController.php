@@ -1,18 +1,24 @@
 <?php
+require_once('app/view/pelisView.php');
 require_once('app/view/usuariosView.php');
 require_once('app/models/usuariosModel.php');
+require_once('app/models/comentariosModel.php');
 require_once('helpers/auth.helper.php');
 
 class UsuariosController
 {
+    private $pelisView;
     private $usuariosView;
     private $usuariosModel;
+    private $comentariosModel;
     private $helper;
 
     public function __construct()
     {
+        $this->pelisView = new PelisView();
         $this->usuariosView = new UsuariosView();
         $this->usuariosModel = new UsuariosModel();
+        $this->comentariosModel = new comentariosModel();
         $this->helper = new AuthHelper();
     }
 
@@ -38,7 +44,10 @@ class UsuariosController
     public function cambiarRol($id, $rol)
     {
         $this->helper->controlarAdmin();
+        //controlo de que el id para cambiar el rol sea diferente del id del usuario activo
+        if ($_SESSION['id'] != $id) {
         $this->usuariosModel->cambioRol($id,$rol);
+        }
         header('location:' . ADMINISTRACION);
     }
 
@@ -73,8 +82,15 @@ class UsuariosController
     public function eliminarUsuario($id)
     {
         $this->helper->controlarAdmin();
+        //controlo de que la sesion a borrar no sea la misma que la activa para eliminar el usuario
         if ($_SESSION['id'] != $id) {
-            $this->usuariosModel->eliminarUsuario($id);
+            $controlar=$this->comentariosModel->controlarComentriosUsuario($id);
+            if($controlar){
+                $this->usuariosModel->eliminarUsuario($id);
+            }else{
+                $usuarios = $this->usuariosModel->getUsuarios();
+                $this->pelisView->mostrarAdministracion($usuarios,"error para eliminar un usuario debe eliminar sus comentarios");
+            }
         }
         header('location:' . ADMINISTRACION);
     }

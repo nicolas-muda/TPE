@@ -2,7 +2,7 @@
 {include file="template/navbar.tpl"}
 <div class="container">
     <h1>{$pelicula->nombre_pelicula}</h1>
-    <img src="img/carteles/{$pelicula->id_pelicula}.jpg" width="300">
+    <img src="{$pelicula->portada}" width="300">
     <p>duracion: {$pelicula->duracion} </p>
     <p>puntuacion de ultra pelis: {$pelicula->puntuacion} </p>
     <p>descripcion: {$pelicula->descripcion}</p>
@@ -16,22 +16,25 @@
         {*formulario para editar la pelicula*}
         <div id="editarPeli" class="ocultar">
             <h1>editar pelicula</h1>
-            <form action="editarpelicula/{$pelicula->id_pelicula}" method="post">
+            <form action="editarpelicula/{$pelicula->id_pelicula}" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
-                    <label class="form-label">ingrese la duracion</label>
-                    <input type="text" class="form-control" name="nombre" placeholder="nuevo nombre" required>
+                    <label class="form-label">ingrese el nombre</label>
+                    <input type="text" class="form-control" name="nombre" placeholder="nuevo nombre"
+                        value="{$pelicula->nombre_pelicula}" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">ingrese la puntuacion</label>
-                    <input type="number" class="form-control" name="puntuacion" placeholder="de 1 a 10" max="10" required>
+                    <input type="number" class="form-control" name="puntuacion" placeholder="de 1 a 10" max="10"
+                        value="{$pelicula->puntuacion}" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">ingrese la duracion</label>
-                    <input type="text" class="form-control" name="duracion" placeholder="xh xxm" required>
+                    <input type="text" class="form-control" name="duracion" value="{$pelicula->duracion}"
+                        placeholder="xh xxm" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">ingrese descripcion</label>
-                    <textarea class="form-control" name="descripcion" rows="3" required></textarea>
+                    <textarea class="form-control" name="descripcion" rows="3" required>{$pelicula->descripcion}</textarea>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">seleccione categoria</label>
@@ -40,6 +43,11 @@
                             <option value="{$categoria->id_generos}">{$categoria->genero}</option>
                         {/foreach}
                     </select>
+                </div>
+                <input type="hidden" name="portadaVieja" value="{$pelicula->portada}" class="form-control">
+                <div class="mb-3">
+                    <label class="form-label">portada</label>
+                    <input type="file" name="portadaNueva" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-info">editar</button>
             </form>

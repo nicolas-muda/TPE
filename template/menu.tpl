@@ -39,7 +39,7 @@
 
         <div id="crearPeli" class="ocultar">
             <h1>crear pelicula</h1>
-            <form action="crearpelicula" method="post">
+            <form action="crearpelicula" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label class="form-label">ingrese el nombre</label>
                     <input type="text" class="form-control" name="nombre" placeholder="nombre" required>
@@ -63,6 +63,10 @@
                             <option value="{$categoria->id_generos}">{$categoria->genero}</option>
                         {/foreach}
                     </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">ingrese portada (opcional)</label>
+                    <input type="file" name="portada" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-info">crear</button>
             </form>

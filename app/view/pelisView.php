@@ -19,8 +19,9 @@ class PelisView
         $this->smarty->display('template/menu.tpl');
     }
 
-    public function mostrarAdministracion($usuarios)
+    public function mostrarAdministracion($usuarios,$mensaje="")
     {
+        $this->smarty->assign('mensaje', $mensaje);
         $this->smarty->assign('usuarios', $usuarios);
         $this->smarty->assign('ROLES', ROLES);
         $this->smarty->display('template/administracion.tpl');

@@ -32,19 +32,48 @@ class PelisModel extends Model
     }
 
     //edita una pelicula segun el nombre seleccionado
-    public function editarPelicula($idpelicula, $nombre, $puntuacion, $duracion, $descripcion, $id_genero)
+    public function editarPelicula($idpelicula, $nombre, $puntuacion, $duracion, $descripcion, $id_genero, $imagen= null, $portadaVieja)
     {
-        $sql = "UPDATE peliculas SET nombre_pelicula=?,puntuacion=?,duracion=?,descripcion=?,id_genero_fk=? WHERE id_pelicula=?";
+        $pathing = $portadaVieja;
+
+        if($imagen){
+            $pathing = $this->uploadFiles($imagen, $pathing);
+        }
+
+        $sql = "UPDATE peliculas SET nombre_pelicula=?,puntuacion=?,duracion=?,descripcion=?,id_genero_fk=?,portada=? WHERE id_pelicula=?";
         $stm = $this->PDO->prepare($sql);
-        $stm->execute([$nombre,$puntuacion, $duracion, $descripcion, $id_genero, $idpelicula]);
+        $stm->execute([$nombre, $puntuacion, $duracion, $descripcion, $id_genero,$pathing, $idpelicula]);
     }
 
+    public function uploadFiles($imagen, $old=null){
+        $filePath = "img/portadas/" . uniqid("", true) . "." . strtolower(pathinfo($imagen['name'], PATHINFO_EXTENSION));
+        $ok = move_uploaded_file($imagen["tmp_name"], $filePath);
+        if($ok && $old){
+            unlink($old);
+        }
+        return $filePath;
+    } 
+
     //crea una pelicula 
-    public function crearPelicula($nombre, $puntuacion, $duracion, $descripcion, $id_genero)
+    public function crearPelicula($nombre, $puntuacion, $duracion, $descripcion, $id_genero, $portada)
     {
-        $sql = "INSERT INTO peliculas(duracion, descripcion, id_genero_fk, nombre_pelicula, puntuacion) VALUES (?,?,?,?,?)";
+        $pathImg = null;
+
+        if ($portada) {
+            $pathImg = $this->cargarPortada($portada);
+        }
+
+        $sql = "INSERT INTO peliculas(duracion, descripcion, id_genero_fk, nombre_pelicula, puntuacion, portada) VALUES (?,?,?,?,?,?)";
         $stm = $this->PDO->prepare($sql);
-        $stm->execute([$duracion, $descripcion, $id_genero, $nombre, $puntuacion]);
+        $stm->execute([$duracion, $descripcion, $id_genero, $nombre, $puntuacion, $pathImg]);
+    }
+
+
+    public function cargarPortada($portada)
+    {
+        $filePath = "img/portadas/" . uniqid("", true) . "." . strtolower(pathinfo($portada['name'], PATHINFO_EXTENSION));
+        move_uploaded_file($portada["tmp_name"], $filePath);
+        return $filePath;
     }
 
     public function controlarGenero($id)
