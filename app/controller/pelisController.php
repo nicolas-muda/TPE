@@ -90,8 +90,8 @@ class PelisController
 
             if ($_FILES['portadaNueva']['type'] == "image/jpg" || $_FILES['portadaNueva']['type'] == "image/jpeg" || $_FILES['portadaNueva']['type'] == "image/png") {
                 $imagen = $_FILES['portadaNueva'];
-            }else{
-                $imagen=null;
+            } else {
+                $imagen = null;
             }
 
             $idpelicula = $id;
@@ -116,11 +116,15 @@ class PelisController
         if (isset($_POST['id'])) {
             $this->helper->controlarSesion();
             $idPelicula = $_POST['id'];
-            $controlar=$this->comentariosModel->controlarComentariosPelicula($idPelicula);
-            if($controlar){
+            $controlar = $this->comentariosModel->controlarComentariosPelicula($idPelicula);
+            if ($controlar) {
+                $portada = $this->peliculasModel->PortadaPelicula($idPelicula);
+                if ($portada->portada != null) {
+                    unlink($portada->portada);
+                }
                 $this->peliculasModel->borrarPelicula($idPelicula);
                 $this->showHome();
-            }else{
+            } else {
                 $this->showHome("error para borrar la pelicula seleccionada tiene que borrar todos sus comentarios");
             }
         } else {
@@ -128,17 +132,15 @@ class PelisController
         }
     }
 
-    public function eliminarPortada()
+    public function eliminarPortada($idPelicula)
     {
         $this->helper->controlarAdmin();
-        if (isset($_POST['id'])) {
-            $this->helper->controlarSesion();
-            $idPelicula = $_POST['id'];
-            $this->peliculasModel->borrarPelicula($idPelicula);
-            $this->showHome();
-        } else {
-            $this->showError();
+        $portada = $this->peliculasModel->PortadaPelicula($idPelicula);
+        if ($portada->portada != null) {
+            $this->peliculasModel->eliminarPortada($idPelicula);
+            unlink($portada->portada);
         }
+        $this->mostrarDetalles($idPelicula);
     }
 
     public function mostrarDetalles($id)
@@ -147,5 +149,4 @@ class PelisController
         $categorias = $this->generosModel->consultarGeneros();
         $this->peliculasView->mostrarDetalles($pelicula, $categorias);
     }
-
 }

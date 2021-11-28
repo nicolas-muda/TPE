@@ -32,27 +32,35 @@ class PelisModel extends Model
     }
 
     //edita una pelicula segun el nombre seleccionado
-    public function editarPelicula($idpelicula, $nombre, $puntuacion, $duracion, $descripcion, $id_genero, $imagen= null, $portadaVieja)
+    public function editarPelicula($idpelicula, $nombre, $puntuacion, $duracion, $descripcion, $id_genero, $imagen = null, $portadaVieja)
     {
         $pathing = $portadaVieja;
 
-        if($imagen){
+        if ($imagen) {
             $pathing = $this->uploadFiles($imagen, $pathing);
         }
 
         $sql = "UPDATE peliculas SET nombre_pelicula=?,puntuacion=?,duracion=?,descripcion=?,id_genero_fk=?,portada=? WHERE id_pelicula=?";
         $stm = $this->PDO->prepare($sql);
-        $stm->execute([$nombre, $puntuacion, $duracion, $descripcion, $id_genero,$pathing, $idpelicula]);
+        $stm->execute([$nombre, $puntuacion, $duracion, $descripcion, $id_genero, $pathing, $idpelicula]);
     }
 
-    public function uploadFiles($imagen, $old=null){
+    public function uploadFiles($imagen, $old = null)
+    {
         $filePath = "img/portadas/" . uniqid("", true) . "." . strtolower(pathinfo($imagen['name'], PATHINFO_EXTENSION));
         $ok = move_uploaded_file($imagen["tmp_name"], $filePath);
-        if($ok && $old){
+        if ($ok && $old) {
             unlink($old);
         }
         return $filePath;
-    } 
+    }
+
+    public function eliminarPortada($idPelicula)
+    {
+        $sql = "UPDATE peliculas SET portada=? WHERE id_pelicula=?";
+        $stm = $this->PDO->prepare($sql);
+        $stm->execute([null, $idPelicula]);
+    }
 
     //crea una pelicula 
     public function crearPelicula($nombre, $puntuacion, $duracion, $descripcion, $id_genero, $portada)
@@ -74,6 +82,15 @@ class PelisModel extends Model
         $filePath = "img/portadas/" . uniqid("", true) . "." . strtolower(pathinfo($portada['name'], PATHINFO_EXTENSION));
         move_uploaded_file($portada["tmp_name"], $filePath);
         return $filePath;
+    }
+
+    public function PortadaPelicula($id)
+    {
+        $sql = "SELECT portada FROM peliculas WHERE id_pelicula=? limit 1";
+        $stm = $this->PDO->prepare($sql);
+        $stm->execute([$id]);
+        $resultado = $stm->fetch(PDO::FETCH_OBJ);
+        return $resultado;
     }
 
     public function controlarGenero($id)

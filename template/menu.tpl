@@ -28,6 +28,7 @@
         </div>
     </form>
 </div>
+{*formulario de creacion de peliculas y generos*}
 {if isset($smarty.session.rol) && $smarty.session.rol == "administrador"}
     <hr>
     {*formulario de peliculas*}

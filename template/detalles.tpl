@@ -12,6 +12,8 @@
         <hr>
         <div class="botonera">
             <button type="button" id="editarPelicula" class="btn btn-info boton">editar pelicula</button>
+            <a href="eliminarPortada/{$pelicula->id_pelicula}"><input type="button" class="btn btn-info"
+                    value="eliminar portada"></a>
         </div>
         {*formulario para editar la pelicula*}
         <div id="editarPeli" class="ocultar">

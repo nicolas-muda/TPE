@@ -64,7 +64,7 @@ switch ($params[0]) {
         $pelisController->eliminarPelicula();
         break;
     case 'eliminarPortada':
-        $pelisController->eliminarPortada();
+        $pelisController->eliminarPortada($params[1]);
         break;
     case 'peliculasFiltradas':
         $pelisController->filtrarPeliculas();
