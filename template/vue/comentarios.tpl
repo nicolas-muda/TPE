@@ -1,6 +1,7 @@
-    {literal}
-        <div id="tabla-comentarios" class="container">
-            <h1> {{ subtitle }} </h1>
+<div id="tabla-comentarios" class="container">
+    <h1> {{ subtitle }} </h1>
+    {if isset($smarty.session.rol)}
+        {literal}
             <div>
                 <label class="form-label">ordenar:</label>
                 <button type="submit" v-on:click="ordenar('fecha_comentario','ASC')" class="btn btn-info">fecha asc</button>
@@ -12,61 +13,63 @@
                     des</button>
             </div>
         {/literal}
-        {if {$smarty.session.rol} == "administrador"}
-            {literal}
-                <div class="container">
-                    <table class="table table-dark table-striped">
-                        <thead>
-                            <tr>
-                                <th>comentario</th>
-                                <th>puntuacion</th>
-                                <th>fecha</th>
-                                <th>usuario</th>
-                                <th>eliminar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-if="comentarios==false">
-                                <th colspan="5">aun no hay comentarios sobre la pelicula</th>
-                            </tr>
-                        </tbody>
-                        <tbody>
-                            <tr v-for="comentario in comentarios">
-                                <td>{{comentario.comentario}}</td>
-                                <td>{{comentario.puntuacion}}</td>
-                                <td>{{comentario.fecha_comentario}}</td>
-                                <td>{{comentario.email}}</td>
-                                <td><button type="button" v-on:click="borrar(comentario.id)"
-                                        class="btn btn-danger">eliminar</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            {/literal}
-        {else}
-            {literal}
-                <div class="container">
-                    <table class="table table-dark table-striped">
+    {/if}
+    {if {$smarty.session.rol} == "administrador"}
+        {literal}
+            <div class="container">
+                <table class="table table-dark table-striped">
+                    <thead>
                         <tr>
                             <th>comentario</th>
                             <th>puntuacion</th>
                             <th>fecha</th>
                             <th>usuario</th>
+                            <th>eliminar</th>
                         </tr>
+                    </thead>
+                    <tbody>
                         <tr v-if="comentarios==false">
-                            <th colspan="4">aun no hay comentarios sobre la pelicula</th>
+                            <th colspan="5">aun no hay comentarios sobre la pelicula</th>
                         </tr>
+                    </tbody>
+                    <tbody>
                         <tr v-for="comentario in comentarios">
                             <td>{{comentario.comentario}}</td>
                             <td>{{comentario.puntuacion}}</td>
                             <td>{{comentario.fecha_comentario}}</td>
                             <td>{{comentario.email}}</td>
+                            <td><button type="button" v-on:click="borrar(comentario.id)"
+                                    class="btn btn-danger">eliminar</button>
+                            </td>
                         </tr>
-                    </table>
-                </div>
-            {/literal}
-        {/if}
+                    </tbody>
+                </table>
+            </div>
+        {/literal}
+    {else}
+        {literal}
+            <div class="container">
+                <table class="table table-dark table-striped">
+                    <tr>
+                        <th>comentario</th>
+                        <th>puntuacion</th>
+                        <th>fecha</th>
+                        <th>usuario</th>
+                    </tr>
+                    <tr v-if="comentarios==false">
+                        <th colspan="4">aun no hay comentarios sobre la pelicula</th>
+                    </tr>
+                    <tr v-for="comentario in comentarios">
+                        <td>{{comentario.comentario}}</td>
+                        <td>{{comentario.puntuacion}}</td>
+                        <td>{{comentario.fecha_comentario}}</td>
+                        <td>{{comentario.email}}</td>
+                    </tr>
+                </table>
+            </div>
+        {/literal}
+    {/if}
+    {if isset($smarty.session.rol)}
         {literal}
             <div class="container">
                 <form>
@@ -83,5 +86,6 @@
                     <button type="button" id="todo" class="btn btn-info">mostrar todo</button>
                 </form>
             </div>
-        </div>
-{/literal}
+        {/literal}
+    {/if}
+</div>

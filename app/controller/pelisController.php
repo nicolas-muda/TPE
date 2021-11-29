@@ -103,7 +103,7 @@ class PelisController
             $id_genero = $_POST['genero'];
 
             $this->peliculasModel->editarPelicula($idpelicula, $nombre, $puntuacion, $duracion, $descripcion, $id_genero, $imagen, $portadaVieja);
-            $this->showHome();
+            $this->mostrarDetalles($idpelicula);
         } else {
             $this->showError();
         }
